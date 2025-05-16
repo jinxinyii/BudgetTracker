@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title id="page-title">Login</title>
+    <script>
+        function setTitle(title) {
+            document.getElementById('page-title').textContent = title;
+        }
+        function showRegister() {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'block';
+            setTitle('Register');
+        }
+        function showLogin() {
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+            setTitle('Login');
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+        <div id="login-form">
+            <h2 class="text-2xl font-bold mb-4">Login</h2>
+            {% if login_error %}
+                <div class="text-red-500 mb-2">{{ login_error }}</div>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-4">
+                    {{ login_form.username }}
+                </div>
+                <div class="mb-4">
+                    {{ login_form.password}}
+                </div>
+                <button type="submit" name="login" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Login</button>
+            </form>
+            <p class="mt-4 text-center">
+                <span class="underline text-blue-600 cursor-pointer" onclick="showRegister()">Register</span>
+            </p>
+        </div>
+
+        <div id="register-form" style="display:none;">
+            <h2 class="text-2xl font-bold mb-4">Register</h2>
+            {% if register_error %}
+                <div class="text-red-500 mb-2">{{ register_error }}</div>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-4">
+                    {{ register_form.username}}
+                </div>
+                <div class="mb-4">
+                    {{ register_form.first_name}}
+                </div>
+                <div class="mb-4">
+                    {{ register_form.middle_name}}
+                </div>
+                <div class="mb-4">
+                    {{ register_form.last_name}}
+                </div>
+                <div class="mb-4">
+                    {{ register_form.password}}
+                </div>
+                <div class="mb-4">
+                    {{ register_form.confirm_password}}
+                </div>
+                <button type="submit" name="register" class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">Register</button>
+            </form>
+            <p class="mt-4 text-center">
+                <span class="underline text-blue-600 cursor-pointer" onclick="showLogin()">Back to Login</span>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
